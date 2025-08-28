@@ -1,17 +1,19 @@
+# Warning
+
+This is a forked version of heroprotocol! It provides the same features while working on the latest versions of Python. You can find the original heroprotocol repository [here](https://github.com/Blizzard/heroprotocol).
+
 # heroprotocol
 
 heroprotocol is a [Python](https://www.python.org/downloads/) library and command-line tool to decode Heroes of the Storm replay files into Python data structures.
 
-The tool is available as a [PyPI Package](https://pypi.org/project/heroprotocol/) or as source code.
-
 Currently heroprotocol can decode these structures and events:
 
-* Replay header
-* Game details
-* Replay init data
-* Game events
-* Message events
-* Tracker events
+- Replay header
+- Game details
+- Replay init data
+- Game events
+- Message events
+- Tracker events
 
 heroprotocol can be used as a base-build-specific library to decode binary blobs, or it can be run as a standalone tool
 to pretty print information from supported replay files.
@@ -25,24 +27,17 @@ heroprotocol supports all Hereos of the Storm replay files that were played with
 
 ## Requirements
 
-* Python 2.7 or 3.x
-  * Note: A future release may remove support for Python 2.7
-* Python Packages:
-  * mpyq 0.2.5+
-  * six 1.14.0+
+- Python3.12+
+- Python Packages:
+  - mpyq 0.2.5+
+  - six 1.14.0+
 
 ## Installation
 
-Either install/update using pip:
+Clone the repository and run from source:
 
 ```bash
-python -m pip install --upgrade heroprotocol
-```
-
-Or clone the repository and run from source:
-
-```bash
-git clone https://github.com/Blizzard/heroprotocol.git
+git clone https://github.com/errorb0t/heroprotocol.git
 python -m pip install -r ./heroprotocol/heroprotocol/requirements.txt
 ```
 
@@ -84,8 +79,8 @@ will likely not parse as regular JSON.
 
 Some notes on tracker events:
 
-* Convert unit tag index, recycle pairs into unit tags (as seen in game events) with protocol.unit_tag (index, recycle)
-* Interpret the NNet.Replay.Tracker.SUnitPositionsEvent events like this:
+- Convert unit tag index, recycle pairs into unit tags (as seen in game events) with protocol.unit_tag (index, recycle)
+- Interpret the NNet.Replay.Tracker.SUnitPositionsEvent events like this:
 
 ```python
 unitIndex = event['m_firstUnitIndex']
@@ -97,12 +92,12 @@ for i in range(0, len(event['m_items']), 3):
     # is at approximate position (x, y)
 ```
 
-* Only units that have inflicted or taken damage are mentioned in unit position events, and they occur periodically with a limit of 256 units mentioned per event.
-* NNet.Replay.Tracker.SUnitInitEvent events appear for units under construction. When complete you'll see a NNet.Replay.Tracker.SUnitDoneEvent with the same unit tag.
-* NNet.Replay.Tracker.SUnitBornEvent events appear for units that are created fully constructed.
-* You may receive a NNet.Replay.Tracker.SUnitDiedEvent after either a UnitInit or UnitBorn event for the corresponding unit tag.
-* In NNet.Replay.Tracker.SPlayerStatsEvent, m_scoreValueFoodUsed and m_scoreValueFoodMade are in fixed point (divide by 4096 for integer values). All other values are in integers.
-* There's a known issue where revived units are not tracked, and placeholder units track death but not birth.
+- Only units that have inflicted or taken damage are mentioned in unit position events, and they occur periodically with a limit of 256 units mentioned per event.
+- NNet.Replay.Tracker.SUnitInitEvent events appear for units under construction. When complete you'll see a NNet.Replay.Tracker.SUnitDoneEvent with the same unit tag.
+- NNet.Replay.Tracker.SUnitBornEvent events appear for units that are created fully constructed.
+- You may receive a NNet.Replay.Tracker.SUnitDiedEvent after either a UnitInit or UnitBorn event for the corresponding unit tag.
+- In NNet.Replay.Tracker.SPlayerStatsEvent, m_scoreValueFoodUsed and m_scoreValueFoodMade are in fixed point (divide by 4096 for integer values). All other values are in integers.
+- There's a known issue where revived units are not tracked, and placeholder units track death but not birth.
 
 ## Reporting Bugs
 
@@ -125,6 +120,8 @@ the s2protocol library that heroprotocol is based upon.
 
 Thanks to Ben Barrett of [HOTSLogs](http://www.hotslogs.com) for early feedback on and beta-testing of the heroprotocol
 library.
+
+The original [heroporotocol repository](github.com/Blizzard/heroprotocol).
 
 ## License
 
