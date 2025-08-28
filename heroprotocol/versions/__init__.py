@@ -6,32 +6,22 @@
 
 import os
 import re
-import imp
+import importlib
 import sys
 
 
 def _import_protocol(base_path, protocol_module_name):
     """
     Import a module from a base path, used to import protocol modules.
-
-    This implementation is derived from the __import__ example here:
-        https://docs.python.org/2/library/imp.html
     """
 
     # Try to return the module if it's been loaded already
     if protocol_module_name in sys.modules:
         return sys.modules[protocol_module_name]
 
-    # If any of the following calls raises an exception,
-    # there's a problem we can't handle -- let the caller handle it.
-    #
-    fp, pathname, description = imp.find_module(protocol_module_name, [base_path])
-    try:
-        return imp.load_module(protocol_module_name, fp, pathname, description)
-    finally:
-        # Since we may exit via an exception, close fp explicitly.
-        if fp:
-            fp.close()
+    sys.path.append(base_path)
+    module = importlib.import_module(protocol_module_name)
+    return module
 
 
 def list_all(base_path=None):
